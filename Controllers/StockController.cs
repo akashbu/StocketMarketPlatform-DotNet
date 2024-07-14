@@ -33,7 +33,7 @@ namespace api.Controllers
             var stocks = await _stockRepository.GetAllAsync();
             var stockDto = stocks.Select(s => s.ToStockDto());
             
-            return Ok(stockDto);
+            return Ok(stocks);
         }
 
         [HttpGet("{id}")]
