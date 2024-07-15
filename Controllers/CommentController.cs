@@ -55,10 +55,37 @@ namespace api.Controllers
                 return BadRequest("Stock Does not exist");
             }
 
-            var commentModel = commentDto.ToCommentFromCommentDto(stockId);
+            var commentModel = commentDto.ToCommentFromCreate(stockId);
             await _commentRepository.CreateAsync(stockId, commentModel);
             
             return CreatedAtAction(nameof(GetById), new {id = commentModel.Id}, commentModel.ToCommentDto());
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> Update([FromRoute] int id,[FromBody] UpdateCommentDto updateCommentDto)
+        {
+            var commentModel = await _commentRepository.UpdateAsync(id, updateCommentDto.ToCommentFromUpdate());
+
+            if (commentModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(commentModel.ToCommentDto());
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var commentModel = await _commentRepository.DeleteAsync(id);
+                    
+            if (commentModel == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }
