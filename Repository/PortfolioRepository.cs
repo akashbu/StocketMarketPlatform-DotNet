@@ -50,7 +50,8 @@ namespace api.Repository
                 Purchase = stock.Stock.Purchase,
                 LastDiv = stock.Stock.LastDiv,
                 Industry = stock.Stock.Industry,
-                MarketCap = stock.Stock.MarketCap
+                MarketCap = stock.Stock.MarketCap,
+                Comments = stock.Stock.Comments
             }).ToListAsync();
         }
     }
